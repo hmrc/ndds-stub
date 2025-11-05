@@ -1,0 +1,82 @@
+/*
+ * Copyright 2025 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package uk.gov.hmrc.nddsstub.models
+
+import play.api.libs.json.{Json, OFormat}
+
+
+case class Country(
+                    name: String
+                  )
+object Country {
+  implicit val format: OFormat[Country] = Json.format[Country]
+}
+
+case class BankAddress(
+                        lines: Seq[String],
+                        town: String,
+                        country: Country,
+                        postCode: String
+                      )
+object BankAddress {
+  implicit val format: OFormat[BankAddress] = Json.format[BankAddress]
+}
+
+case class Bank(
+                 bankName: String,
+                 ddiVoucherFlag: String,
+                 address: BankAddress
+               )
+object Bank {
+  val default = Bank(
+    "bankName",
+    "N",
+    BankAddress(
+      Seq("1", "Place"),
+      "town",
+      Country("country"),
+      "FF1 1FF"
+    )
+  )
+  implicit val format: OFormat[Bank] = Json.format[Bank]
+}
+
+case class BarsVerificationResponse(accountNumberIsWellFormatted: String,
+                                    sortCodeIsPresentOnEISCD: String,
+                                    sortCodeBankName: Option[String],
+                                    accountExists: String,
+                                    nameMatches: String,
+                                    sortCodeSupportsDirectDebit: String,
+                                    sortCodeSupportsDirectCredit: String,
+                                    nonStandardAccountDetailsRequiredForBacs: Option[String],
+                                    iban: Option[String],
+                                    accountName: Option[String])
+object BarsVerificationResponse {
+  val default = BarsVerificationResponse(
+    "yes",
+    "yes",
+    None,
+    "yes",
+    "yes",
+    "yes",
+    "yes",
+    None,
+    None,
+    None
+  )
+  implicit val format: OFormat[BarsVerificationResponse] = Json.format[BarsVerificationResponse]
+}

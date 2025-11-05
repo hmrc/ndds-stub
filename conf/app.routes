@@ -1,3 +1,4 @@
 # microservice specific routes
 
-GET        /hello-world             uk.gov.hmrc.nddsstub.controllers.MicroserviceHelloWorldController.hello
+GET        /metadata/*ignore        uk.gov.hmrc.nddsstub.controllers.BarsStubController.metadata(ignore)
+GET        /verify/*ignore          uk.gov.hmrc.nddsstub.controllers.BarsStubController.verify(ignore)
