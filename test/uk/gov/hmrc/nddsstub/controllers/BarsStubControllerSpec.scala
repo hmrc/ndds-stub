@@ -23,19 +23,16 @@ import play.api.libs.json.Json
 import play.api.test.Helpers.*
 import play.api.test.{FakeRequest, Helpers}
 
-class BarsStubControllerSpec
-  extends AnyWordSpec
-     with Matchers:
+class BarsStubControllerSpec extends AnyWordSpec with Matchers:
 
   private val fakeRequest = FakeRequest("GET", "/")
-  private val controller  = new BarsStubController(Helpers.stubControllerComponents())
+  private val controller = new BarsStubController(Helpers.stubControllerComponents())
 
   "GET /metadata" should:
     "return 200" in:
       val result = controller.metadata("")(fakeRequest)
       status(result) shouldBe Status.OK
-      contentAsJson(result) shouldBe Json.parse(
-        """{
+      contentAsJson(result) shouldBe Json.parse("""{
           |  "bankName":"bankName",
           |  "ddiVoucherFlag":"N",
           |  "address":{
@@ -52,8 +49,7 @@ class BarsStubControllerSpec
     "return 200" in:
       val result = controller.verify("")(fakeRequest)
       status(result) shouldBe Status.OK
-      contentAsJson(result) shouldBe Json.parse(
-        """{
+      contentAsJson(result) shouldBe Json.parse("""{
           |  "accountNumberIsWellFormatted":"yes",
           |  "sortCodeIsPresentOnEISCD":"yes",
           |  "accountExists":"yes",

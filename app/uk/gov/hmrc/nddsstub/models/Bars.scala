@@ -18,29 +18,28 @@ package uk.gov.hmrc.nddsstub.models
 
 import play.api.libs.json.{Json, OFormat}
 
-
 case class Country(
-                    name: String
-                  )
+  name: String
+)
 object Country {
   implicit val format: OFormat[Country] = Json.format[Country]
 }
 
 case class BankAddress(
-                        lines: Seq[String],
-                        town: String,
-                        country: Country,
-                        postCode: String
-                      )
+  lines: Seq[String],
+  town: String,
+  country: Country,
+  postCode: String
+)
 object BankAddress {
   implicit val format: OFormat[BankAddress] = Json.format[BankAddress]
 }
 
 case class Bank(
-                 bankName: String,
-                 ddiVoucherFlag: String,
-                 address: BankAddress
-               )
+  bankName: String,
+  ddiVoucherFlag: String,
+  address: BankAddress
+)
 object Bank {
   val default = Bank(
     "bankName",
@@ -64,7 +63,8 @@ case class BarsVerificationResponse(accountNumberIsWellFormatted: String,
                                     sortCodeSupportsDirectCredit: String,
                                     nonStandardAccountDetailsRequiredForBacs: Option[String],
                                     iban: Option[String],
-                                    accountName: Option[String])
+                                    accountName: Option[String]
+                                   )
 object BarsVerificationResponse {
   val default = BarsVerificationResponse(
     "yes",

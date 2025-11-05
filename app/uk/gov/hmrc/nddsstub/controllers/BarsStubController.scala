@@ -25,8 +25,7 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import javax.inject.{Inject, Singleton}
 
 @Singleton()
-class BarsStubController @Inject()(cc: ControllerComponents)
-  extends BackendController(cc) with Logging:
+class BarsStubController @Inject() (cc: ControllerComponents) extends BackendController(cc) with Logging:
 
   def metadata(ignore: String): Action[AnyContent] =
     Action:
