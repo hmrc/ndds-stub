@@ -26,6 +26,7 @@ import play.api.test.{FakeRequest, Helpers}
 class BarsStubControllerSpec extends AnyWordSpec with Matchers:
 
   private val fakeRequest = FakeRequest("GET", "/")
+  private val fakePost = FakeRequest("POST", "/")
   private val controller = new BarsStubController(Helpers.stubControllerComponents())
 
   "GET /metadata" should:
@@ -45,9 +46,9 @@ class BarsStubControllerSpec extends AnyWordSpec with Matchers:
           |  }
           |}""".stripMargin)
 
-  "GET /verify" should:
+  "POST /verify" should:
     "return 200" in:
-      val result = controller.verify("")(fakeRequest)
+      val result = controller.verify("")(fakePost)
       status(result) shouldBe Status.OK
       contentAsJson(result) shouldBe Json.parse("""{
           |  "accountNumberIsWellFormatted":"yes",

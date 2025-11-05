@@ -1,4 +1,4 @@
 # microservice specific routes
 
 GET        /metadata/*ignore        uk.gov.hmrc.nddsstub.controllers.BarsStubController.metadata(ignore)
-GET        /verify/*ignore          uk.gov.hmrc.nddsstub.controllers.BarsStubController.verify(ignore)
+POST       /verify/*ignore          uk.gov.hmrc.nddsstub.controllers.BarsStubController.verify(ignore)
