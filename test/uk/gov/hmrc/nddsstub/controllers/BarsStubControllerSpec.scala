@@ -32,7 +32,7 @@ class BarsStubControllerSpec
 
   "GET /metadata" should:
     "return 200" in:
-      val result = controller.metadata()(fakeRequest)
+      val result = controller.metadata("")(fakeRequest)
       status(result) shouldBe Status.OK
       contentAsJson(result) shouldBe Json.parse(
         """{
@@ -50,7 +50,7 @@ class BarsStubControllerSpec
 
   "GET /verify" should:
     "return 200" in:
-      val result = controller.verify()(fakeRequest)
+      val result = controller.verify("")(fakeRequest)
       status(result) shouldBe Status.OK
       contentAsJson(result) shouldBe Json.parse(
         """{
