@@ -2,3 +2,5 @@
 
 GET        /metadata/*ignore        uk.gov.hmrc.nddsstub.controllers.BarsStubController.metadata(ignore)
 POST       /verify/*ignore          uk.gov.hmrc.nddsstub.controllers.BarsStubController.verify(ignore)
+
+POST       /submission/ChRIS/NDDS/Filing/async/HMRC-NDDS-DDI    uk.gov.hmrc.nddsstub.controllers.ChrisStubController.submit
