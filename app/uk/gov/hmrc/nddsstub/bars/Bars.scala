@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.nddsstub.models
+package uk.gov.hmrc.nddsstub.bars
 
 import play.api.libs.json.{Json, OFormat}
 

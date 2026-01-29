@@ -1,6 +1,6 @@
 # microservice specific routes
 
-GET       /metadata/*ignore        uk.gov.hmrc.nddsstub.controllers.BarsStubController.metadata(ignore)
-POST      /verify/*ignore          uk.gov.hmrc.nddsstub.controllers.BarsStubController.verify(ignore)
+GET       /metadata/*ignore        uk.gov.hmrc.nddsstub.bars.BarsStubController.metadata(ignore)
+POST      /verify/*ignore          uk.gov.hmrc.nddsstub.bars.BarsStubController.verify(ignore)
 
 POST      /rate-limited-allow-list/services/:ignore1/features/:ignore2   uk.gov.hmrc.nddsstub.allowList.RateLimitedAllowListController.verify(ignore1, ignore2)

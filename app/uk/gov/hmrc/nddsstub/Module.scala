@@ -18,7 +18,6 @@ package uk.gov.hmrc.nddsstub
 
 import play.api.{Configuration, Environment}
 import play.api.inject.{Binding, Module as AppModule}
-import uk.gov.hmrc.nddsstub.controllers.BarsStubController
 
 import java.time.Clock
 
@@ -28,6 +27,5 @@ class Module extends AppModule:
     environment: Environment,
     configuration: Configuration
   ): Seq[Binding[_]] =
-    bind[BarsStubController].toSelf ::
       bind[Clock].toInstance(Clock.systemDefaultZone) :: // inject if current time needs to be controlled in unit tests
       Nil
