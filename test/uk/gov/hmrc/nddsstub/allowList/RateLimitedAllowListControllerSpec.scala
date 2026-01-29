@@ -28,7 +28,7 @@ class RateLimitedAllowListControllerSpec extends AnyWordSpec with Matchers:
   private val controller = RateLimitedAllowListController(Helpers.stubControllerComponents())
 
   "GET" should:
-    "return 500, when the identifier ends with a lower case alpha character" in :
+    "return 500, when the identifier ends with a lower case alpha character" in:
       val fakeRequest =
         FakeRequest("POST", routes.RateLimitedAllowListController.verify("", "").url)
           .withBody(CheckRequest("1111115"))
@@ -37,7 +37,7 @@ class RateLimitedAllowListControllerSpec extends AnyWordSpec with Matchers:
 
       status(result) shouldBe Status.INTERNAL_SERVER_ERROR
 
-    "return 400, when the identifier ends with character 4" in :
+    "return 400, when the identifier ends with character 4" in:
       val fakeRequest =
         FakeRequest("POST", routes.RateLimitedAllowListController.verify("", "").url)
           .withBody(CheckRequest("1111114"))
@@ -46,7 +46,7 @@ class RateLimitedAllowListControllerSpec extends AnyWordSpec with Matchers:
 
       status(result) shouldBe Status.BAD_REQUEST
 
-    "return 200 with a false, when the identifier ends with a numeric character that is odd and not 5" when :
+    "return 200 with a false, when the identifier ends with a numeric character that is odd and not 5" when:
       "ends with 3" in:
         val fakeRequest =
           FakeRequest("POST", routes.RateLimitedAllowListController.verify("", "").url)
@@ -54,17 +54,17 @@ class RateLimitedAllowListControllerSpec extends AnyWordSpec with Matchers:
 
         val result = controller.verify("", "")(fakeRequest)
 
-        status(result) shouldBe Status.OK
+        status(result)        shouldBe Status.OK
         contentAsJson(result) shouldBe Json.obj("included" -> false)
-        
-      "ends with 1" in :
+
+      "ends with 1" in:
         val fakeRequest =
           FakeRequest("POST", routes.RateLimitedAllowListController.verify("", "").url)
             .withBody(CheckRequest("1111111"))
 
         val result = controller.verify("", "")(fakeRequest)
 
-        status(result) shouldBe Status.OK
+        status(result)        shouldBe Status.OK
         contentAsJson(result) shouldBe Json.obj("included" -> false)
 
     "return 200 with a true, when the identifier ends with a numeric character that is even and not 4" when:
@@ -75,9 +75,9 @@ class RateLimitedAllowListControllerSpec extends AnyWordSpec with Matchers:
 
         val result = controller.verify("", "")(fakeRequest)
 
-        status(result) shouldBe Status.OK
+        status(result)        shouldBe Status.OK
         contentAsJson(result) shouldBe Json.obj("included" -> true)
-        
+
       "ends with 6" in:
         val fakeRequest =
           FakeRequest("POST", routes.RateLimitedAllowListController.verify("", "").url)
@@ -85,6 +85,5 @@ class RateLimitedAllowListControllerSpec extends AnyWordSpec with Matchers:
 
         val result = controller.verify("", "")(fakeRequest)
 
-        status(result) shouldBe Status.OK
+        status(result)        shouldBe Status.OK
         contentAsJson(result) shouldBe Json.obj("included" -> true)
-        

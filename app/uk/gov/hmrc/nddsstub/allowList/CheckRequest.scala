@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.nddsstub.allowList
 
-import play.api.libs.json.{OFormat, Json}
+import play.api.libs.json.{Json, OFormat}
 
 case class CheckRequest(identifier: String)
 

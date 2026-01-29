@@ -25,18 +25,14 @@ import javax.inject.{Inject, Singleton}
 import scala.util.Try
 
 @Singleton()
-class RateLimitedAllowListController @Inject()(cc: ControllerComponents) extends BackendController(cc) with Logging:
+class RateLimitedAllowListController @Inject() (cc: ControllerComponents) extends BackendController(cc) with Logging:
 
   def verify(ignore1: String, ignore2: String): Action[CheckRequest] =
     Action(parse.json[CheckRequest]):
       implicit request =>
         val endChar: Either[Char, Int] = Try(request.body.identifier.last.toString.toInt).toEither.left.map(_ => request.body.identifier.last)
-        
-        if (request.body.identifier.endsWith("5")) then 
-          InternalServerError
-        else if (request.body.identifier.endsWith("4")) then
-          BadRequest
-        else if (Try(request.body.identifier.last.toString.toInt).getOrElse(1) % 2 == 0 ) then
-          Ok(Json.obj("included" -> true))
-        else
-          Ok(Json.obj("included" -> false))
+
+        if request.body.identifier.endsWith("5") then InternalServerError
+        else if request.body.identifier.endsWith("4") then BadRequest
+        else if Try(request.body.identifier.last.toString.toInt).getOrElse(1) % 2 == 0 then Ok(Json.obj("included" -> true))
+        else Ok(Json.obj("included" -> false))
