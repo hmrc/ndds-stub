@@ -30,7 +30,7 @@ class RateLimitedAllowListController @Inject() (cc: ControllerComponents) extend
   def verify(ignore1: String, ignore2: String): Action[CheckRequest] =
     Action(parse.json[CheckRequest]):
       implicit request =>
-        if request.body.identifier.endsWith("5") then InternalServerError
-        else if request.body.identifier.endsWith("4") then BadRequest
-        else if Try(request.body.identifier.last.toString.toInt).getOrElse(1) % 2 == 0 then Ok(Json.obj("included" -> true))
-        else Ok(Json.obj("included" -> false))
+        if request.body.identifier.toLowerCase.endsWith("status500") then InternalServerError
+        else if request.body.identifier.toLowerCase.endsWith("status400") then BadRequest
+        else if request.body.identifier.toLowerCase().endsWith("old") then Ok(Json.obj("included" -> false))
+        else Ok(Json.obj("included" -> true))
