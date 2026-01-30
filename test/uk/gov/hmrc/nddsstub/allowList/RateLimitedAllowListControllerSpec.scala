@@ -28,62 +28,40 @@ class RateLimitedAllowListControllerSpec extends AnyWordSpec with Matchers:
   private val controller = RateLimitedAllowListController(Helpers.stubControllerComponents())
 
   "GET" should:
-    "return 500, when the identifier ends with a lower case alpha character" in:
+    "return 500, when the identifier ends with status500" in:
       val fakeRequest =
         FakeRequest("POST", routes.RateLimitedAllowListController.verify("", "").url)
-          .withBody(CheckRequest("1111115"))
+          .withBody(CheckRequest("status500"))
 
       val result = controller.verify("", "")(fakeRequest)
 
       status(result) shouldBe Status.INTERNAL_SERVER_ERROR
 
-    "return 400, when the identifier ends with character 4" in:
+    "return 400, when the identifier ends with status400" in:
       val fakeRequest =
         FakeRequest("POST", routes.RateLimitedAllowListController.verify("", "").url)
-          .withBody(CheckRequest("1111114"))
+          .withBody(CheckRequest("status400"))
 
       val result = controller.verify("", "")(fakeRequest)
 
       status(result) shouldBe Status.BAD_REQUEST
 
-    "return 200 with a false, when the identifier ends with a numeric character that is odd and not 5" when:
-      "ends with 3" in:
-        val fakeRequest =
-          FakeRequest("POST", routes.RateLimitedAllowListController.verify("", "").url)
-            .withBody(CheckRequest("1111113"))
+    "return 200 with a false, when the identifier ends `old`" in:
+      val fakeRequest =
+        FakeRequest("POST", routes.RateLimitedAllowListController.verify("", "").url)
+          .withBody(CheckRequest("gold"))
 
-        val result = controller.verify("", "")(fakeRequest)
+      val result = controller.verify("", "")(fakeRequest)
 
-        status(result)        shouldBe Status.OK
-        contentAsJson(result) shouldBe Json.obj("included" -> false)
+      status(result)        shouldBe Status.OK
+      contentAsJson(result) shouldBe Json.obj("included" -> false)
 
-      "ends with 1" in:
-        val fakeRequest =
-          FakeRequest("POST", routes.RateLimitedAllowListController.verify("", "").url)
-            .withBody(CheckRequest("1111111"))
+    "return 200 with a true, when the identifier ends does not end with old/status400/status500" in:
+      val fakeRequest =
+        FakeRequest("POST", routes.RateLimitedAllowListController.verify("", "").url)
+          .withBody(CheckRequest("alksdjf238469"))
 
-        val result = controller.verify("", "")(fakeRequest)
+      val result = controller.verify("", "")(fakeRequest)
 
-        status(result)        shouldBe Status.OK
-        contentAsJson(result) shouldBe Json.obj("included" -> false)
-
-    "return 200 with a true, when the identifier ends with a numeric character that is even and not 4" when:
-      "ends with 2" in:
-        val fakeRequest =
-          FakeRequest("POST", routes.RateLimitedAllowListController.verify("", "").url)
-            .withBody(CheckRequest("1111112"))
-
-        val result = controller.verify("", "")(fakeRequest)
-
-        status(result)        shouldBe Status.OK
-        contentAsJson(result) shouldBe Json.obj("included" -> true)
-
-      "ends with 6" in:
-        val fakeRequest =
-          FakeRequest("POST", routes.RateLimitedAllowListController.verify("", "").url)
-            .withBody(CheckRequest("1111116"))
-
-        val result = controller.verify("", "")(fakeRequest)
-
-        status(result)        shouldBe Status.OK
-        contentAsJson(result) shouldBe Json.obj("included" -> true)
+      status(result)        shouldBe Status.OK
+      contentAsJson(result) shouldBe Json.obj("included" -> true)
