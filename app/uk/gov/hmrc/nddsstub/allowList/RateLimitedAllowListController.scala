@@ -30,8 +30,6 @@ class RateLimitedAllowListController @Inject() (cc: ControllerComponents) extend
   def verify(ignore1: String, ignore2: String): Action[CheckRequest] =
     Action(parse.json[CheckRequest]):
       implicit request =>
-        val endChar: Either[Char, Int] = Try(request.body.identifier.last.toString.toInt).toEither.left.map(_ => request.body.identifier.last)
-
         if request.body.identifier.endsWith("5") then InternalServerError
         else if request.body.identifier.endsWith("4") then BadRequest
         else if Try(request.body.identifier.last.toString.toInt).getOrElse(1) % 2 == 0 then Ok(Json.obj("included" -> true))
