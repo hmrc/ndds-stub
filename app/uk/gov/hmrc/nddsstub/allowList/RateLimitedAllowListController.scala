@@ -22,7 +22,6 @@ import play.api.mvc.{Action, ControllerComponents}
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.{Inject, Singleton}
-import scala.util.Try
 
 @Singleton()
 class RateLimitedAllowListController @Inject() (cc: ControllerComponents) extends BackendController(cc) with Logging:
