@@ -26,7 +26,7 @@ import javax.inject.{Inject, Singleton}
 @Singleton()
 class RateLimitedAllowListController @Inject() (cc: ControllerComponents) extends BackendController(cc) with Logging:
 
-  def verify(ignore1: String, ignore2: String): Action[CheckRequest] =
+  def verify(): Action[CheckRequest] =
     Action(parse.json[CheckRequest]):
       implicit request =>
         if request.body.identifier.toLowerCase.endsWith("status500") then InternalServerError
