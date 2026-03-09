@@ -22,12 +22,11 @@ import play.api.mvc.{Action, ControllerComponents}
 import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 
 import javax.inject.{Inject, Singleton}
-import scala.util.Try
 
 @Singleton()
 class RateLimitedAllowListController @Inject() (cc: ControllerComponents) extends BackendController(cc) with Logging:
 
-  def verify(ignore1: String, ignore2: String): Action[CheckRequest] =
+  def verify(): Action[CheckRequest] =
     Action(parse.json[CheckRequest]):
       implicit request =>
         if request.body.identifier.toLowerCase.endsWith("status500") then InternalServerError

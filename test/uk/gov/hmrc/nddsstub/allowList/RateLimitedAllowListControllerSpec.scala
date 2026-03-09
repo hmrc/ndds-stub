@@ -30,38 +30,38 @@ class RateLimitedAllowListControllerSpec extends AnyWordSpec with Matchers:
   "GET" should:
     "return 500, when the identifier ends with status500" in:
       val fakeRequest =
-        FakeRequest("POST", routes.RateLimitedAllowListController.verify("", "").url)
+        FakeRequest("POST", routes.RateLimitedAllowListController.verify().url)
           .withBody(CheckRequest("status500"))
 
-      val result = controller.verify("", "")(fakeRequest)
+      val result = controller.verify()(fakeRequest)
 
       status(result) shouldBe Status.INTERNAL_SERVER_ERROR
 
     "return 400, when the identifier ends with status400" in:
       val fakeRequest =
-        FakeRequest("POST", routes.RateLimitedAllowListController.verify("", "").url)
+        FakeRequest("POST", routes.RateLimitedAllowListController.verify().url)
           .withBody(CheckRequest("status400"))
 
-      val result = controller.verify("", "")(fakeRequest)
+      val result = controller.verify()(fakeRequest)
 
       status(result) shouldBe Status.BAD_REQUEST
 
     "return 200 with a false, when the identifier ends `old`" in:
       val fakeRequest =
-        FakeRequest("POST", routes.RateLimitedAllowListController.verify("", "").url)
+        FakeRequest("POST", routes.RateLimitedAllowListController.verify().url)
           .withBody(CheckRequest("gold"))
 
-      val result = controller.verify("", "")(fakeRequest)
+      val result = controller.verify()(fakeRequest)
 
       status(result)        shouldBe Status.OK
       contentAsJson(result) shouldBe Json.obj("included" -> false)
 
     "return 200 with a true, when the identifier ends does not end with old/status400/status500" in:
       val fakeRequest =
-        FakeRequest("POST", routes.RateLimitedAllowListController.verify("", "").url)
+        FakeRequest("POST", routes.RateLimitedAllowListController.verify().url)
           .withBody(CheckRequest("alksdjf238469"))
 
-      val result = controller.verify("", "")(fakeRequest)
+      val result = controller.verify()(fakeRequest)
 
       status(result)        shouldBe Status.OK
       contentAsJson(result) shouldBe Json.obj("included" -> true)
