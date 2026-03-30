@@ -16,6 +16,7 @@ lazy val microservice = Project("ndds-stub", file("."))
     )
   )
   .settings(CodeCoverageSettings.settings: _*)
+  .settings(SbtUpdatesSettings.settings: _*)
 
 lazy val it = project
   .enablePlugins(PlayScala)
